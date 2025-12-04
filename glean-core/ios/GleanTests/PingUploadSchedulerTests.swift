@@ -17,7 +17,7 @@ final class PingUploadSchedulerTests: XCTestCase {
         uploaderCapabilities: []
     )
 
-    func testPingUploadScheduler_doesNotInfiniteLoop_onProcess() throws {
+    func testPingUploadScheduler_doesNotInfiniteLoop_onProcess() {
         let subject = createSubject()
 
         subject.process()
@@ -34,7 +34,7 @@ final class PingUploadSchedulerTests: XCTestCase {
         wait(for: [waitForSerialOperationQueueExpectation], timeout: 2)
     }
 
-    func testPingUploadScheduler_endsBackgroundTasks_whenFinished() throws {
+    func testPingUploadScheduler_endsBackgroundTasks_whenFinished() {
         let mockBackgroundTaskScheduler = MockBackgroundTaskScheduler(withValidTaskIdentifier: true)
 
         let subject = createSubject(backgroundTaskScheduler: mockBackgroundTaskScheduler)
@@ -56,7 +56,7 @@ final class PingUploadSchedulerTests: XCTestCase {
         wait(for: [waitForSerialOperationQueueExpectation], timeout: 2)
     }
 
-    func testPingUploadScheduler_doesNotEndBackgroundTasks_forInvalidTaskIdentifier() throws {
+    func testPingUploadScheduler_doesNotEndBackgroundTasks_forInvalidTaskIdentifier() {
         let mockBackgroundTaskScheduler = MockBackgroundTaskScheduler(withValidTaskIdentifier: false)
 
         let subject = createSubject(backgroundTaskScheduler: mockBackgroundTaskScheduler)
@@ -79,7 +79,7 @@ final class PingUploadSchedulerTests: XCTestCase {
         wait(for: [waitForSerialOperationQueueExpectation], timeout: 2)
     }
 
-    func testPingUploadScheduler_forUploadTasks_callsPingUploader() throws {
+    func testPingUploadScheduler_forUploadTasks_callsPingUploader() {
         let testTaskType = PingUploadTask.upload(request: testPingUploadRequest)
 
         let pingUploadExpectation = expectation(description: "Wait for the ping upload request")
@@ -87,7 +87,7 @@ final class PingUploadSchedulerTests: XCTestCase {
         let mockBackgroundTaskScheduler = MockBackgroundTaskScheduler(withValidTaskIdentifier: false)
         let mockGleanUploadTaskProvider = MockGleanUploadTaskProviderProtocol(returningTask: testTaskType)
         let mockPingUploader = MockPingUploader(
-            uploadRequested: { request in
+            uploadRequested: { _ in
                 // We want to ensure that we try to upload a ping for `PingUploadTask.upload` tasks
                 pingUploadExpectation.fulfill()
             }
@@ -104,7 +104,7 @@ final class PingUploadSchedulerTests: XCTestCase {
         wait(for: [pingUploadExpectation], timeout: 2)
     }
 
-    func testPingUploadScheduler_forWaitTasks() throws {
+    func testPingUploadScheduler_forWaitTasks() {
         let testTaskType = PingUploadTask.wait(time: 1)
 
         let mockBackgroundTaskScheduler = MockBackgroundTaskScheduler(withValidTaskIdentifier: true)
@@ -133,7 +133,7 @@ final class PingUploadSchedulerTests: XCTestCase {
         wait(for: [waitForSerialOperationQueueExpectation], timeout: 2)
     }
 
-    func testPingUploadScheduler_forDoneTasks() throws {
+    func testPingUploadScheduler_forDoneTasks() {
         let testTaskType = PingUploadTask.done(unused: 0)
 
         let mockBackgroundTaskScheduler = MockBackgroundTaskScheduler(withValidTaskIdentifier: true)

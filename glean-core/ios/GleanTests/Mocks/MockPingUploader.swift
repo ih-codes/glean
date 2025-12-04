@@ -7,7 +7,7 @@ import XCTest
 @testable import Glean
 
 final class MockPingUploader: PingUploader, @unchecked Sendable {
-    var uploadRequested: (CapablePingUploadRequest) -> ()
+    var uploadRequested: (CapablePingUploadRequest) -> Void
 
     init(uploadRequested: @escaping (CapablePingUploadRequest) -> Void) {
         self.uploadRequested = uploadRequested

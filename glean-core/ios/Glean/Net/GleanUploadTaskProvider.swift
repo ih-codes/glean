@@ -10,7 +10,7 @@ public protocol GleanUploadTaskProviderProtocol: Sendable {
 
 public final class GleanUploadTaskProvider: GleanUploadTaskProviderProtocol {
     public init() {}
-    
+
     /// Calls the global `gleanGetUploadTask` and returns a `PingUploadTask`.
     public func getUploadTask() -> PingUploadTask {
         return gleanGetUploadTask()
