@@ -49,6 +49,8 @@ public class PingUploadScheduler {
     ///
     /// - parameters:
     ///     * configuration: The Glean `Configuration` to use which contains the endpoint and http uploader
+    ///     * backgroundTaskScheduler: The `BackgroundTaskScheduler` which starts and ends background tasks.
+    ///     * gleanUploadTaskProvider: The `GleanUploadTaskProviderProtocol` wrapping the global `gleanGetUploadTask`.
     public init(
         configuration: Configuration,
         backgroundTaskScheduler: BackgroundTaskScheduler = UIApplication.shared,

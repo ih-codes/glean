@@ -20,7 +20,9 @@ final class MockBackgroundTaskScheduler: BackgroundTaskScheduler, @unchecked Sen
         expirationHandler handler: (@MainActor @Sendable () -> Void)?
     ) -> UIBackgroundTaskIdentifier {
         calledBeginBackgroundTask += 1
-        return withValidTaskIdentifier ? UIBackgroundTaskIdentifier(rawValue: Int.random(in: 0...Int.max)) : .invalid
+        return withValidTaskIdentifier
+               ? UIBackgroundTaskIdentifier(rawValue: Int.random(in: 0...Int.max))
+               : .invalid
     }
 
     func endBackgroundTask(_ identifier: UIBackgroundTaskIdentifier) {
